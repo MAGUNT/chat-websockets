@@ -1,0 +1,25 @@
+{
+    "chatApp": {
+        "mesage" : {
+            "home": {
+                "title": "Mesages",
+                "createLabel": "Create a new Mesage",
+                "createOrEditLabel": "Create or edit a Mesage",
+                "search": "Search for Mesage"
+            },
+            "created": "A new Mesage is created with identifier {{ param }}",
+            "updated": "A Mesage is updated with identifier {{ param }}",
+            "deleted": "A Mesage is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Mesage {{ id }}?"
+            },
+            "detail": {
+                "title": "Mesage"
+            },
+            "mesage": "Mesage",
+            "date": "Date",
+            "emisor": "Emisor",
+            "evento": "Evento"
+        }
+    }
+}

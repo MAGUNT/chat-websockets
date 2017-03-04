@@ -1,0 +1,15 @@
+
+    <div class="container-fluid">
+        <h3>Messages</h3>
+        <irontec-simple-chat
+            messages="vm.messages"
+            username="vm.login"
+            input-placeholder-text="You can write here"
+            submit-button-text="Send your message"
+            title="Chat: {{vm.event.name}}"
+            submit-function="vm.sendMessage"
+            visible="true"
+            theme="material"
+            expand-on-new="true">
+        </irontec-simple-chat>
+    </div>

@@ -1,0 +1,40 @@
+
+<div>
+    <h2><span data-translate="chatApp.mesage.detail.title">Mesage</span> {{vm.mesage.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span data-translate="chatApp.mesage.mesage">Mesage</span></dt>
+        <dd>
+            <span>{{vm.mesage.mesage}}</span>
+        </dd>
+        <dt><span data-translate="chatApp.mesage.date">Date</span></dt>
+        <dd>
+            <span>{{vm.mesage.date | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="chatApp.mesage.emisor">Emisor</span></dt>
+        <dd>
+            {{vm.mesage.emisorLogin}}
+        </dd>
+        <dt><span data-translate="chatApp.mesage.evento">Evento</span></dt>
+        <dd>
+            <a ui-sref="eventang-detail({id:vm.mesage.eventoId})">{{vm.mesage.eventoName}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="mesageang-detail.edit({id:vm.mesage.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+
+
+
+
+
+</div>

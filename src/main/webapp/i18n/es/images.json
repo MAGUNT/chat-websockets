@@ -1,0 +1,23 @@
+{
+    "chatApp": {
+        "images" : {
+            "home": {
+                "title": "Images",
+                "createLabel": "Crear nuevo Images",
+                "createOrEditLabel": "Crear o editar Images",
+                "search": "Search for Images"
+            },
+            "created": "Un nuevo Images ha sido creado con el identificador {{ param }}",
+            "updated": "Un Images ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Images ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Images {{ id }}?"
+            },
+            "detail": {
+                "title": "Images"
+            },
+            "description": "Description",
+            "image": "Image"
+        }
+    }
+}
