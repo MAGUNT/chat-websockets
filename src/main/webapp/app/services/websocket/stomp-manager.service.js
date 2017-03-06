@@ -27,20 +27,18 @@
             send: send,
             subscribe: subscribe,
             unsubscribe: unsubscribe,
-            isConnected: isConnected
+            isConnected: isConnected,
+            reconnect: reconnect
         };
 
         return service;
 
         function connect (headers = {}) {
-            if (isConnected()) {
-                return connected.promise;
-            }
             let socket = new SockJS(buildUrl());
             stompClient = Stomp.over(socket);
             stompClient.connect(headers,
                 () => connected.resolve('success'),
-                () => connected.reject('error'));
+                () => connect(headers));
 
             return connected.promise;
         }
@@ -77,9 +75,11 @@
         }
 
         function send(url, payload, headers = {}) {
-            if (isConnected()) {
-                stompClient.send(url, headers, angular.toJson(payload));
-            }
+            connected.promise.then(() => {
+                if (isConnected()) {
+                    stompClient.send(url, headers, angular.toJson(payload));
+                }
+            });
         }
 
         function reconnect(headers = {}) {
@@ -93,16 +93,14 @@
         function subscribe (url) {
             let value = subscribeMap.get(url)
                 || { subscriber: null, listener: $q.defer() };
-            subscribeMap.set(url, value);
-            connected.promise.then(() => {
-                value.subscriber = stompClient.subscribe(url, data => {
-                    console.log("NOTIFYYYYYYYY");
-                    value.listener.notify(angular.fromJson(data.body));
-                });
-            });
+            subscribeKeyValue(url, value);
         }
         function subscribeKeyValue(url, value) {
-
+            subscribeMap.set(url, value);
+            connected.promise.then(() => {
+                value.subscriber = stompClient.subscribe(url, data =>
+                    value.listener.notify(angular.fromJson(data.body)));
+            });
         }
 
         function unsubscribe (url) {

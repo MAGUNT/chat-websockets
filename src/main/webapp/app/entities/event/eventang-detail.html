@@ -4,10 +4,12 @@
         <irontec-simple-chat
             messages="vm.messages"
             username="vm.login"
+            my-user-id="vm.myUserId"
             input-placeholder-text="You can write here"
             submit-button-text="Send your message"
             title="Chat: {{vm.event.name}}"
             submit-function="vm.sendMessage"
+            history-function="vm.loadPage"
             visible="true"
             theme="material"
             expand-on-new="true">

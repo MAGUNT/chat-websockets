@@ -18,6 +18,7 @@
 				title: '@',
 				theme: '@',
 				submitFunction: '&',
+                historyFunction: '&',
 				visible: '=',
 				infiniteScroll: '&',
                 expandOnNew: '='
@@ -82,6 +83,7 @@
 		vm.toggle = toggle;
 		vm.close = close;
 		vm.submitFunction = submitFunction;
+		vm.historyFunction = $scope.historyFunction();
 
 		function submitFunction() {
 			$scope.submitFunction()(vm.writingMessage, vm.username);

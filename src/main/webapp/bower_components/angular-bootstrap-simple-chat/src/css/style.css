@@ -123,3 +123,7 @@
 .chat-msg.chat-msg-sent time {
   float: right;
 }
+
+.sent {
+    background: #C8E6C9;
+}

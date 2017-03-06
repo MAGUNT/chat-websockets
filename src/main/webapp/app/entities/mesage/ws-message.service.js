@@ -39,7 +39,6 @@
 
         function unsubscribe (idEvent) {
             StompManager.unsubscribe(SUBSCRIBE_TRACKER_URL + idEvent);
-
         }
     }
 })();

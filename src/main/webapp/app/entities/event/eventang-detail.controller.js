@@ -8,28 +8,58 @@
     EventAngDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Event', 'Mesage', 'WSMessage', 'Principal'];
 
     function EventAngDetailController($scope, $rootScope, $stateParams, previousState, entity, Event, Mesage, WSMessage, Principal) {
-        var vm = this;
         const EVENT_ID = entity.id;
+        let msgsParams = {
+            idEvent : EVENT_ID,
+            page: 0,
+            size: 10,
+            sort: 'date,desc'
+        };
+
+        var vm = this;
         vm.event = entity;
         vm.previousState = previousState.name;
         vm.sendMessage = sendMessage;
+        vm.loadPage = loadPage;
         vm.messages = [];
 
-        Mesage.eventMessages({
-                idEvent : EVENT_ID,
-                sort: 'date,asc'
-            })
-            .$promise
-            .then((msgs) => vm.messages.push(...msgs.map(mapMessage)));
+        loadPage();
 
-        Principal
-            .identity()
-            .then(p => vm.login = p.login);
+        Principal.identity()
+            .then(p => {
+                vm.myUserId = p.id;
+                vm.login = p.login
+            });
 
-        WSMessage
-            .subscribe(EVENT_ID)
-            .then(null, null, m => vm.messages.push(mapMessage(m)));
+        WSMessage.subscribe(EVENT_ID)
+            .then(null, null, addNewMessage);
 
+
+        function loadPage() {
+            Mesage.eventMessages(msgsParams).$promise
+                .then(addPage);
+        }
+
+        function addPage(msgs){
+            if(msgs.length === 0
+                && msgsParams.page !== 0) {
+                return;
+            }
+            let mapRevMsgs = msgs
+                .reverse()
+                .map(mapMessage);
+
+            vm.messages.unshift(...mapRevMsgs);
+            ++msgsParams.page;
+        }
+
+        function addNewMessage(m) {
+            if(vm.messages.length
+                % msgsParams.size === 0) {
+                vm.messages.shift();
+            }
+            vm.messages.push(mapMessage(m));
+        }
 
         function sendMessage(message, username) {
             if(message && message !== '') {
@@ -40,8 +70,9 @@
         function mapMessage(m) {
             return {
                 'date' : m.date,
-                'username':m.emisorLogin,
+                'username': m.emisorLogin,
                 'content': m.mesage,
+                'fromUserId': m.emisorId
             };
         }
 
